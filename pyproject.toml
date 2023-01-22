@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "fusion"
+version = "0.1.0"
+description = ""
+authors = ["davilos <daviloscostagg@hotmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "^4.1.2"
+psycopg2-binary = "^2.9.5"
+gunicorn = "^20.1.0"
+dj-static = "^0.0.6"
+django-stdimage = "^6.0.1"
+blue = "^0.9.1"
+isort = "^5.10.1"
+django-adminlte2 = "^0.4.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
