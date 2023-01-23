@@ -21,3 +21,4 @@ pyflakes==2.4.0
 sqlparse==0.4.3
 static3==0.7.0
 tomli==2.0.1
+whitenoise==6.3.0
