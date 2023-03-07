@@ -1,11 +1,12 @@
 import uuid
+from typing import Tuple
 
 from django.db import models
 from stdimage.models import StdImageField
 
 
-def get_file_path(_instance, filename):
-    ext = filename.split('.')[-1]
+def get_file_path(_instance, filename: str) -> str:
+    ext: str = filename.split('.')[-1]
     filename = f'{uuid.uuid4()}.{ext}'
     return filename
 
@@ -16,11 +17,11 @@ class Base(models.Model):
     ativo = models.BooleanField('Ativo', default=True)
 
     class Meta:
-        abstract = True
+        abstract: bool = True
 
 
 class Servico(Base):
-    ICONE_CHOICES = (
+    ICONE_CHOICES: Tuple[Tuple[str, str], ...] = (
         ('lni-cog', 'Engrenagem'),
         ('lni-stats-up', 'Gráfico'),
         ('lni-users', 'Usuários'),
@@ -33,8 +34,8 @@ class Servico(Base):
     icone = models.CharField('Icone', max_length=12, choices=ICONE_CHOICES)
 
     class Meta:
-        verbose_name = 'Serviço'
-        verbose_name_plural = 'Serviços'
+        verbose_name: str = 'Serviço'
+        verbose_name_plural: str = 'Serviços'
 
     def __str__(self) -> str:
         return self.servico
@@ -44,8 +45,8 @@ class Cargo(Base):
     cargo = models.CharField('Cargo', max_length=100)
 
     class Meta:
-        verbose_name = 'Cargo'
-        verbose_name_plural = 'Cargos'
+        verbose_name: str = 'Cargo'
+        verbose_name_plural: str = 'Cargos'
 
     def __str__(self) -> str:
         return self.cargo
@@ -67,15 +68,15 @@ class Funcionario(Base):
     instagram = models.CharField('Instagram', max_length=100, default='#')
 
     class Meta:
-        verbose_name = 'Funcionário'
-        verbose_name_plural = 'Funcionários'
+        verbose_name: str = 'Funcionário'
+        verbose_name_plural: str = 'Funcionários'
 
     def __str__(self) -> str:
         return self.nome
 
 
 class Feature(Base):
-    ICONE_CHOICES = (
+    ICONE_CHOICES: Tuple[Tuple[str, str], ...] = (
         ('lni-rocket', 'Foguete'),
         ('lni-laptop-phone', 'Aparelhos'),
         ('lni-cog', 'Engrenagem'),
@@ -88,8 +89,8 @@ class Feature(Base):
     icone = models.CharField('Ícone', max_length=16, choices=ICONE_CHOICES)
 
     class Meta:
-        verbose_name = 'Feature'
-        verbose_name_plural = 'Features'
+        verbose_name: str = 'Feature'
+        verbose_name_plural: str = 'Features'
 
     def __str__(self) -> str:
         return self.feature
