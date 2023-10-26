@@ -1,55 +1,29 @@
-# Fusion
-Este projeto é uma aplicação Django a qual eu ainda estou desenvolvendo e atualizando todos os dias.
+# Fusion v2
+Este projeto é uma aplicação com Python e Django. Consiste em um site com registro/login de contas, 
+apresentação de dados no index através do ORM. Também já vem embutido o /admin do próprio Django para o login de superusuários. Tudo isso dockerizado, legal, né? :D
 
-No momento não fiz um deploy no projeto, mas você pode testá-lo na sua máquina.
+O projeto ainda não está em produção, mas já pode ser testado. Você só precisa ter o Docker e o docker-compose instalado na sua máquina!
 
-Primeiro vamos ver as bibliotecas que você precisa ter instaladas na sua máquina. Lembrando que eu utilizo o Python ^3.11.
+Se você já tem tudo que precisa, basta agora criar um arquivo .env na `RAIZ` do projeto. Eu criei um exemplo dele, basta você copiar e colar, OU retirar o "-example".
 
-* Django
-* psycopg2-binary
-* gunicorn
-* dj-static
-* django-stdimage
-* blue
-* isort
-* django-adminlte2
-* dj-database-url
-* whitenoise
-
-Antes, temos que mudar o settings.py da pasta "fusion", pois ela está com configurações para o deploy.
-
-## Altere todos os comandos a seguir
-```
-Debug = True
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nome_do_banco_de_dados',
-        'USER': 'seu_usuario',
-        'PASSWORD': 'sua_senha',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-    }
-}
-
-"""
-DATABASES = {
-    'default': dj_database_url.parse(os.environ.get('DATABASE_URL'), conn_max_age=600),
-}
-"""
-```
-E claro, para o banco de dados funcionar, você tem que baixar o Postgresql e configurá-lo na sua máquina.
+Não precisar mudar nenhum valor das variáveis, mas caso prefira, manda ver! :)
 
 ## Como rodar o projeto
 
-```
-poetry shell
-poetry install
+Agora que já temos tudo definido, vamos começar a trabalhar com o docker-compose.
+Primeiro de tudo, você terá que rodar o comando `make build`.
+E por fim, o `make start`. Após esses comandos funcionarem, você já pode começar a testar o projeto!
 
-python3.11 manage.py migrate
-python3.11 manage.py runserver
-```
+## Como acessar o /admin
 
-OBS: Como ainda estou atualizando o projeto constantemente, podem surgir bibliotecas novas, que talvez não seja do seu interesse.
-Por exemplo as bibliotecas que vou utilizar para testar todo o projeto.
+Para você preencher os dados necessários para serem mostrados no index, você precisa ser um superuser.
+Para criar um, basta rodar o comando `make createsuperuser`, e então fornecer seus dados para cadastro.
+
+Após isso, bastar acessar o `/admin` na URL, e fazer o login.
+`http://0.0.0.0:8000/admin/`.
+
+---
+Nessa **v2**, eu dockerizei o Django e o banco de dados (PostgreSQL), para ficar mais fácil a inicialização do projeto, e ainda adicionei o Makefile para
+diminuir a complexidade dos comandos digitados no terminal.
+
+Em versões posteriores, pretendo adicionar APIs REST com o Django REST Framework!
