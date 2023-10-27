@@ -17,5 +17,5 @@ precommit:
 	docker container exec -ti django_container python -m blue .
 	docker container exec -ti -u root django_container chown -R user:user /django
 
-	docker container exec -ti django_container python -m isort .
+	docker container exec -ti django_container python -m isort . --skip migrations
 	docker container exec -ti -u root django_container chown -R user:user /django
