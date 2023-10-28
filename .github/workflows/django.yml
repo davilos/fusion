@@ -37,7 +37,7 @@ jobs:
       - name: Isort check
         run: |
           python -m isort --check --diff .
-          python -m isort .
+          python -m isort . --skip migrations
 
       - name: Coverage report
         run: |
