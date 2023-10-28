@@ -1,10 +1,10 @@
 import uuid
 from typing import Any
 
-from django.test import TestCase
 from model_mommy import mommy
 
 from core.models import get_file_path
+from django.test import TestCase
 
 
 class GetFilePathTestCase(TestCase):

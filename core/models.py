@@ -1,8 +1,9 @@
 import uuid
 from typing import Tuple
 
-from django.db import models
 from stdimage.models import StdImageField
+
+from django.db import models
 
 
 def get_file_path(_instance, filename: str) -> str:

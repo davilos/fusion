@@ -1,6 +1,5 @@
-from django.test import TestCase
-
 from core.forms import ContatoForm
+from django.test import TestCase
 
 CONTATO = ContatoForm
 
