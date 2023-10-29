@@ -13,17 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: github_actions
-        ports:
-          - 5433:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
     steps:
       - uses: actions/checkout@v2
 
@@ -32,20 +21,11 @@ jobs:
         with:
           python-version: 3.11.4
 
-      - name: Debug PostgreSQL Connection
-        run: |
-          psql -h ${{ secrets.DB_HOST}} -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME }}
-          SELECT datname, usename, datacl FROM pg_database, pg_user;
-
       - name: Install dependencies and DB migrations
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_ENGINE: ${{ secrets.DB_ENGINE }}
+          SQL_ENGINE: django.db.backends.sqlite3
+          DB_NAME: fusion
+          SECRET_KEY: cj_u51f&4^7t7v=-%=cxo7y$wi)n!44$x4$3y&$$a*y)@ghkom'
         run: |
           echo "DB_ENGINE: $DB_ENGINE"
           echo "DB_NAME: $DB_NAME"
@@ -74,13 +54,9 @@ jobs:
 
       - name: Coverage report
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_ENGINE: ${{ secrets.DB_ENGINE }}
+          SQL_ENGINE: django.db.backends.sqlite3
+          DB_NAME: fusion
+          SECRET_KEY: cj_u51f&4^7t7v=-%=cxo7y$wi)n!44$x4$3y&$$a*y)@ghkom'
         run: |
           coverage run manage.py test
           coverage report
