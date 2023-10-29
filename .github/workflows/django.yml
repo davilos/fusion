@@ -32,6 +32,10 @@ jobs:
         with:
           python-version: 3.11.4
 
+      - name: Debug PostgreSQL Connection
+        run: |
+          psql -h $DB_HOST -U $DB_USER -d $DB_NAME
+
       - name: Install dependencies and DB migrations
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
