@@ -24,16 +24,9 @@ jobs:
       - name: Install dependencies and DB migrations
         env:
           SQL_ENGINE: django.db.backends.sqlite3
-          DB_NAME: fusion
+          DB_NAME: fusion/db.sqlite3
           SECRET_KEY: cj_u51f&4^7t7v=-%=cxo7y$wi)n!44$x4$3y&$$a*y)@ghkom'
         run: |
-          echo "DB_ENGINE: $DB_ENGINE"
-          echo "DB_NAME: $DB_NAME"
-          echo "DB_USER: $DB_USER"
-          echo "DB_PASSWORD: $DB_PASSWORD"
-          echo "DB_HOST: $DB_HOST"
-          echo "DB_PORT: $DB_PORT"
-          
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           python manage.py makemigrations
@@ -55,12 +48,16 @@ jobs:
       - name: Coverage report
         env:
           SQL_ENGINE: django.db.backends.sqlite3
-          DB_NAME: fusion
+          DB_NAME: fusion/db.sqlite3
           SECRET_KEY: cj_u51f&4^7t7v=-%=cxo7y$wi)n!44$x4$3y&$$a*y)@ghkom'
         run: |
           coverage run manage.py test
           coverage report
 
       - name: Django Testing
+        env:
+          SQL_ENGINE: django.db.backends.sqlite3
+          DB_NAME: fusion/db.sqlite3
+          SECRET_KEY: cj_u51f&4^7t7v=-%=cxo7y$wi)n!44$x4$3y&$$a*y)@ghkom'
         run: |
           python manage.py test 
