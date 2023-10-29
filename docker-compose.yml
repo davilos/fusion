@@ -16,7 +16,7 @@ services:
   db:
     image: postgres:13-alpine
     volumes:
-      - .data/db:/var/lib/postgresql/data
+      - postgresql-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -24,3 +24,6 @@ services:
     container_name: postgres_db
     env_file:
       - ./.env
+
+volumes:
+  postgresql-data:
