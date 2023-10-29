@@ -4,6 +4,7 @@ createsuperuser:
 	docker container exec -ti django_container python manage.py createsuperuser
 start:
 	docker-compose up
+	docker container exec -ti django_container python manage.py runserver
 stop:
 	docker-compose down
 build:
