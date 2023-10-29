@@ -13,17 +13,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:13-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: github_actions
+        ports:
+          - 5433:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
+
       - name: Set up Python 3.11
         uses: actions/setup-python@v2
         with:
           python-version: 3.11.4
 
-      - name: Install dependencies
+      - name: Install dependencies and DB migrations
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_ENGINE: ${{ secrets.DB_ENGINE }}
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          python manage.py makemigrations
+          python manage.py migrate
 
       - name: Lint with flake8
         run: |
@@ -31,15 +53,22 @@ jobs:
 
       - name: Blue check
         run: |
-          python -m blue --check --diff .
+          python -m blue --check --diff . |
           python -m blue .
 
       - name: Isort check
         run: |
-          python -m isort --check --diff .
           python -m isort . --skip migrations
 
       - name: Coverage report
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_ENGINE: ${{ secrets.DB_ENGINE }}
         run: |
           coverage run manage.py test
           coverage report
