@@ -34,7 +34,8 @@ jobs:
 
       - name: Debug PostgreSQL Connection
         run: |
-          psql -h $DB_HOST -U $DB_USER -d $DB_NAME
+          psql -h ${{ secrets.DB_HOST}} -U ${{ secrets.DB_USER }} -d ${{ secrets.DB_NAME }}
+          SELECT datname, usename, datacl FROM pg_database, pg_user;
 
       - name: Install dependencies and DB migrations
         env:
