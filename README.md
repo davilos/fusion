@@ -1,5 +1,5 @@
 # Fusion v2
-Este projeto é uma aplicação com Python e Django. Consiste em um site com registro/login de contas, 
+É um site com registro/login de contas, 
 apresentação de dados no index através do ORM. Também já vem embutido o /admin do próprio Django para o login de superusuários. Tudo isso dockerizado, legal, né? :D
 
 O projeto ainda não está em produção, mas já pode ser testado. Você só precisa ter o Docker e o docker-compose instalado na sua máquina!
